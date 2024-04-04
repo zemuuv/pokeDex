@@ -1,4 +1,3 @@
-var artyom;
 $(document).ready(function () {
 
     $("#boton").on("click", function () {
@@ -52,45 +51,42 @@ $(document).ready(function () {
             }
         });
     });
+});
 
-    
-   
-    $("#activar-voz").on("click", function () {
-        artyom = new Artyom();
+const artyom = new Artyom();
 
-        artyom.addCommands({
-            indexes: ["Hola", "adios", "comando"],
-            action: function (i) {
-                if (i == 0) {
-                    artyom.say("saludo");
-                } else if (i == 1) {
-                    artyom.say("chao");
-                } else if (i == 2) {
-                    console.log("recibido");
-                }
-            }
-        });
+document.querySelector("#activar").addEventListener('click', function(){
+    artyom.say("sonido activado");
+});
 
-        artyom.initialize({
-            lang: "es-ES",
-            debug: true,
-            listen: true,
-            continuous: true,
-            speed: 0.9,
-            mode: "normal"
-        });
+artyom.addCommands({
+    indexes: ["Hola","adios", "comando"],
+    action: function(i){
+        if(i == 0){
+            artyom.say("saludo");
+        }else if(i == 1){
+            artyom.say("chao");
+        }
+        else if(i == 2) {console.log("recibido");
 
-        // Agregar el evento para el texto reconocido
-        artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
-            if (isFinal) {
-                console.log("Texto final reconocido: " + recognized);
-            } else {
-                console.log(recognized);
-            }
-        });
+        }
+    }
+});
 
-        // Informar al usuario que Artyom está listo
-        artyom.say("Artyom está listo para escuchar.");
-    });
+artyom.initialize({
+    lang:"es-ES",
+    debug:true,
+    listen:true,
+    continuous: true,
+    speed:0.9,
+    mode:"normal"
+});
+
+artyom.redirectRecognizedTextOutput(function(recognized,isFinal){
+    if(isFinal){
+        console.log("Texto final reconocido: " + recognized);
+    }else{
+        console.log(recognized);
+    }
 });
 
